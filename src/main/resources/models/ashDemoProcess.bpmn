@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.15.0">
+  <bpmn:process id="ashDemoProcess" isExecutable="true">
+    <bpmn:startEvent id="start" name="start">
+      <bpmn:outgoing>SequenceFlow_1sz6737</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1sz6737" sourceRef="start" targetRef="userDetailsInput" />
+    <bpmn:endEvent id="end" name="Ended after error">
+      <bpmn:incoming>Flow_0p9k8zd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="userDetailsInput" name="UserDetails">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=a" target="taskInfo" />
+          <zeebe:output source="=taskInfoOutput" target="taskInfoOutput" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1sz6737</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ud4k7b</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0ud4k7b" sourceRef="userDetailsInput" targetRef="userDetailsReadOnly" />
+    <bpmn:userTask id="userDetailsReadOnly" name="UserDetailsReadOnly">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=taskInfoOutput" target="userDetailsReadOnlyInput" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ud4k7b</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p9k8zd</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0p9k8zd" sourceRef="userDetailsReadOnly" targetRef="end" />
+  </bpmn:process>
+  <bpmn:error id="Error_0pek6aj" name="Error_2t5kb31" errorCode="DOESNT_WORK" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ashDemoProcess">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="180" y="138" width="22" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0gbv3sc_di" bpmnElement="end">
+        <dc:Bounds x="1082" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1057" y="273" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1egindx_di" bpmnElement="userDetailsInput">
+        <dc:Bounds x="570" y="370" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11zkxdi_di" bpmnElement="userDetailsReadOnly">
+        <dc:Bounds x="790" y="370" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1sz6737_di" bpmnElement="SequenceFlow_1sz6737">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="390" y="120" />
+        <di:waypoint x="390" y="390" />
+        <di:waypoint x="570" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="260" y="105" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ud4k7b_di" bpmnElement="Flow_0ud4k7b">
+        <di:waypoint x="670" y="410" />
+        <di:waypoint x="790" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p9k8zd_di" bpmnElement="Flow_0p9k8zd">
+        <di:waypoint x="890" y="410" />
+        <di:waypoint x="986" y="410" />
+        <di:waypoint x="986" y="240" />
+        <di:waypoint x="1082" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
